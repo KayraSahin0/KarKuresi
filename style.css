@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1a2639; /* Videodaki koyu mavi ton */
+    color: white;
+    overflow: hidden; /* Sayfa kaydırmayı engelle */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* GÜNCELLENEN: Arka Plan Konumlandırması */
+.bg-pattern {
+    position: absolute;
+    top: 50%;  /* Ekranın tam ortası */
+    left: 50%; /* Ekranın tam ortası */
+    /* Hem ortala hem de döndür: */
+    transform: translate(-50%, -50%) rotate(-15deg); 
+    width: 300%;  /* Ekranı garanti kaplaması için çok geniş */
+    height: 300%; /* Çok yüksek */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    gap: 30px; /* Satırlar arası boşluk */
+}
+
+/* YENİ EKLENEN: Satır ve Yazı Stilleri */
+.bg-row {
+    white-space: nowrap; /* Yazıların alt satıra geçmesini engelle */
+    display: flex;
+    gap: 20px; /* Kelimeler arası boşluk */
+    width: 200%; /* Ekrandan taşması için genişlik */
+}
+
+.bg-text {
+    font-size: 1.5rem; /* Biraz daha büyüttük */
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+/* YENİ EKLENEN: Kayma Animasyonları */
+/* Sola Doğru Kayma */
+@keyframes slideLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Sağa Doğru Kayma (Alternatif satırlar için) */
+@keyframes slideRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+/* Animasyon Sınıfları */
+.move-left {
+    animation: slideLeft 40s linear infinite;
+}
+
+.move-right {
+    animation: slideRight 40s linear infinite;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, #1a2639 90%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Ana İçerik */
+.container {
+    position: absolute; /* Relative yerine Absolute yapıyoruz */
+    top: 50%;           /* Yukarıdan %50 it */
+    left: 50%;          /* Soldan %50 it */
+    transform: translate(-50%, -50%); /* Tam merkeze oturt */
+    z-index: 100;       /* En önde olduğundan emin ol */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;        /* Genişlik sorunu olmaması için */
+    max-width: 600px;   /* Çok yayılmaması için */
+}
+
+.title {
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Kar Küresi Tasarımı */
+.snow-globe-container {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.snow-globe-container:active {
+    transform: scale(0.98);
+}
+
+.globe-glass {
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(255,255,255,0.05) 40%, rgba(0,0,0,0.2) 80%);
+    border-radius: 50%;
+    border: 8px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Kar Efekti Alanı */
+.snow-canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+/* Camsı Yansıma Efekti */
+.reflection {
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 30%;
+    height: 20%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+    border-radius: 50%;
+    z-index: 4;
+    filter: blur(2px);
+}
+
+/* Küre Tabanı */
+.globe-base {
+    width: 220px;
+    height: 60px;
+    background: linear-gradient(to right, #8B4513, #CD853F, #8B4513);
+    margin: -30px auto 0; /* Kürenin altına girmesi için */
+    border-radius: 50% / 20px; /* Silindirik görünüm */
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 4px solid #DEB887;
+}
+
+.year-label {
+    background: #5c3008;
+    padding: 2px 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #FFD700;
+    border: 1px solid #FFD700;
+    box-shadow: 0 0 5px #FFD700;
+}
+
+/* Mesaj Kutusu */
+.message-box {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 15px;
+    max-width: 90%;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.hint {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Responsive Ayarlar */
+@media (max-width: 400px) {
+    .globe-glass {
+        width: 240px;
+        height: 240px;
+    }
+    .globe-base {
+        width: 180px;
+    }
+    .title {
+        font-size: 1.5rem;
+    }
+}
